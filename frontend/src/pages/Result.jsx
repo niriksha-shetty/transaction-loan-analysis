@@ -5,6 +5,7 @@ function Result() {
   const navigate = useNavigate();
 
   const prediction = location.state?.prediction;
+  const explanation = location.state?.explanation || [];
 
   return (
     <div style={styles.container}>
@@ -23,7 +24,31 @@ function Result() {
           <h3 style={styles.rejected}>Rejected ❌</h3>
         )}
 
-        {/* Optional button */}
+        {/* 🔍 Explanation Section */}
+        <div style={styles.explanationBox}>
+          <h4>Analysis</h4>
+
+          {explanation.length === 0 ? (
+            <p>No details available</p>
+          ) : (
+            explanation.map((item, i) => (
+              <p key={i} style={styles.reason}>
+                {item}
+              </p>
+            ))
+          )}
+        </div>
+
+        {/* 💡 Extra Insight */}
+        {prediction === 0 && (
+          <div style={styles.tipBox}>
+            <p>
+              💡 Tip: Improve your credit score, reduce loan amount, or increase assets to improve approval chances.
+            </p>
+          </div>
+        )}
+
+        {/* 🔁 Try Again */}
         <button
           style={styles.secondaryButton}
           onClick={() => navigate("/loan")}
@@ -35,6 +60,9 @@ function Result() {
   );
 }
 
+// =========================
+// 🎨 STYLES
+// =========================
 const styles = {
   container: {
     height: "100vh",
@@ -62,20 +90,44 @@ const styles = {
     borderRadius: "10px",
     boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
     textAlign: "center",
-    width: "300px"
+    width: "350px"
   },
 
   approved: {
     color: "green",
-    margin: "20px 0"
+    margin: "20px 0",
+    fontSize: "22px"
   },
 
   rejected: {
     color: "red",
-    margin: "20px 0"
+    margin: "20px 0",
+    fontSize: "22px"
+  },
+
+  explanationBox: {
+    textAlign: "left",
+    marginTop: "20px",
+    background: "#f9f9f9",
+    padding: "15px",
+    borderRadius: "8px"
+  },
+
+  reason: {
+    margin: "5px 0",
+    fontSize: "14px"
+  },
+
+  tipBox: {
+    marginTop: "15px",
+    padding: "10px",
+    background: "#fff3cd",
+    borderRadius: "6px",
+    fontSize: "13px"
   },
 
   secondaryButton: {
+    marginTop: "20px",
     padding: "10px",
     border: "none",
     background: "#36A2EB",

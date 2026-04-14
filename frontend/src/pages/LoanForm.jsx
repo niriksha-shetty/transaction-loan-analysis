@@ -7,22 +7,25 @@ function LoanForm() {
   const [form, setForm] = useState({
     income: "",
     loan_amount: "",
+    loan_term: "",
     credit_score: "",
-    employment: ""
+    assets: ""
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ UPDATED: Call backend instead of dummy logic
+  // ✅ CONNECT TO BACKEND
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
       income: Number(form.income),
       loan_amount: Number(form.loan_amount),
-      credit_score: Number(form.credit_score)
+      loan_term: Number(form.loan_term),
+      credit_score: Number(form.credit_score),
+      assets: Number(form.assets)
     };
 
     try {
@@ -36,7 +39,6 @@ function LoanForm() {
 
       const data = await res.json();
 
-      // Navigate with prediction result
       navigate("/result", { state: data });
 
     } catch (error) {
@@ -56,14 +58,15 @@ function LoanForm() {
       <div style={styles.card}>
         <h2>Loan Application</h2>
         <p style={styles.subtitle}>
-          Fill in your details to check loan eligibility
+          Enter your financial details to check loan eligibility
         </p>
 
         <form onSubmit={handleSubmit} style={styles.form}>
+          
           <input
             type="number"
             name="income"
-            placeholder="Monthly Income (₹)"
+            placeholder="Annual Income (₹)"
             value={form.income}
             onChange={handleChange}
             required
@@ -82,25 +85,33 @@ function LoanForm() {
 
           <input
             type="number"
+            name="loan_term"
+            placeholder="Loan Term (months)"
+            value={form.loan_term}
+            onChange={handleChange}
+            required
+            style={styles.input}
+          />
+
+          <input
+            type="number"
             name="credit_score"
-            placeholder="Credit Score (0 or 1)"
+            placeholder="CIBIL Score (300 - 900)"
             value={form.credit_score}
             onChange={handleChange}
             required
             style={styles.input}
           />
 
-          <select
-            name="employment"
-            value={form.employment}
+          <input
+            type="number"
+            name="assets"
+            placeholder="Total Assets Value (₹)"
+            value={form.assets}
             onChange={handleChange}
             required
             style={styles.input}
-          >
-            <option value="">Select Employment Type</option>
-            <option value="salaried">Salaried</option>
-            <option value="self-employed">Self-employed</option>
-          </select>
+          />
 
           <button type="submit" style={styles.button}>
             Check Eligibility
@@ -111,6 +122,9 @@ function LoanForm() {
   );
 }
 
+// =========================
+// 🎨 STYLES
+// =========================
 const styles = {
   container: {
     height: "100vh",
