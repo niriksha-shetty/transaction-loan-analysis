@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import LoanForm from "./pages/LoanForm";
 import Result from "./pages/Result";
 import AddTransaction from "./pages/AddTransaction";
+import LoanPredict from "./pages/Loanpredict";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path="/loan" element={<LoanForm />} />
         <Route path="/result" element={<Result />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
-        
+        <Route path="/loanpredict" element={<LoanPredict />} />
       </Routes>
     </BrowserRouter>
   );

@@ -99,6 +99,8 @@ function LoanForm() {
             placeholder="CIBIL Score (300 - 900)"
             value={form.credit_score}
             onChange={handleChange}
+            min="300" 
+            max="900"
             required
             style={styles.input}
           />
